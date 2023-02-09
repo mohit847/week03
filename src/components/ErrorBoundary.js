@@ -16,13 +16,14 @@ class ErrorBoundary extends React.Component {
         <div>
           <h2>Something went wrong.</h2>
           <details>
-            {this.state.error && this.state.toString()}
+            {this.state.error && this.state.error.toString()}
             <br />
             {this.state.errorInfo.componentStack}
           </details>
         </div>
       );
     }
+
     return this.props.children;
   }
 }

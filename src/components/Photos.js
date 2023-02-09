@@ -1,40 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getAllPhotos } from "../apis/apis";
-// import Axios from "axios";
+import { AnupamaContext } from "../App";
+import ChildComponent from "./ChildComponent";
 
 const Photos = () => {
   const [photoList, setPhotoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const anupamaContent = useContext(AnupamaContext);
 
-  //   useEffect(() => {
-  //     fetch("https://jsonplaceholder.typicode.com/photos")
-  //       .then((response) => response.json())
-  //       .then((json) => setPhotoList(json))
-  //       .finally(() => setIsLoading(false));
-  //   }, []);
+  anupamaContent.favCharacter = "Anuj";
+
 
   useEffect(() => {
     getAllPhotos()
-    // Axios.get("https://jsonplaceholder.typicode.com/photos")
       .then((response) => {
         let foundPhotos = response.data;
         setPhotoList(foundPhotos);
       })
       .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        anupamaContent.favCharacter = "Anuj";
+      });
   }, []);
 
   if (isLoading) {
-    return <h4>Loading...</h4>;
+    return <h4>{anupamaContent.favCharacter}</h4>;
   }
 
   return (
     <div>
-      {photoList.map((photo, index) => {
+      {anupamaContent.favCharacter}
+      {photoList.map((photo, index) => (
         <div key={index}>
           <img src={photo.url} alt={photo.title} />
-        </div>;
-      })}
+        </div>
+      ))}
+      <AnupamaContext.Consumer>
+        {(context) => <ChildComponent context={context} />}
+      </AnupamaContext.Consumer>
     </div>
   );
 };

@@ -5,10 +5,12 @@ function higherOrderComponent(HocComponent) {
     render() {
       return (
         <div>
+          <h1>Inside HOC</h1>
           <HocComponent />
         </div>
       );
     }
   };
 }
+
 export default higherOrderComponent;

@@ -1,11 +1,10 @@
 import React from "react";
-import RenderPropsComponent from "./RederPropsComponent";
+import RenderPropsComponent from "./RenderPropsComponent";
 import { useCookies } from "react-cookie";
 
 const SampleRenderProps = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["name"]);
+  const [cookies] = useCookies(["name"]);
   console.log(cookies);
-
   return (
     <RenderPropsComponent
       render={() => {
