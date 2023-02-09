@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { testAPI } from "../apis/testApi";
 
 class SumNumbers extends Component {
@@ -8,20 +9,20 @@ class SumNumbers extends Component {
     sum: 0,
     sumString: "The component has not updated the state!",
   };
-
   componentDidMount() {
+    console.log("We are in Component Did Mount of SumNumbers");
     testAPI(5, 6).then((sum) => {
       this.setSum(sum);
     });
   }
+  // componentDidUpdate() {
+  //   console.log("Component has updated!");
+  //   this.setState({
+  //     ...this.state,
+  //     sumString: `The sum is: ${this.state.sum}`,
+  //   });
+  // }
 
-  componentDidUpdate() {
-    console.log("Component has updated!");
-    this.setState({
-      ...this.state,
-      sumStirng: `The sum is: ${this.state.sum}`,
-    });
-  }
 
   setSum = (sum) => {
     if (typeof sum !== "undefined") {
@@ -33,7 +34,6 @@ class SumNumbers extends Component {
       });
     }
   };
-
   render() {
     return (
       <div>
@@ -60,10 +60,12 @@ class SumNumbers extends Component {
           value={this.state.secondNumber}
         />
         <button onClick={(e) => this.setSum()}>Add Numbers</button>
-        <h3>The sum is: {this.state.sum}</h3>
+        <h3>{this.state.sumString}</h3>
+        <h1>The count is: {this.props.count}</h1>
       </div>
     );
   }
 }
 
-export default SumNumbers;
+// export SumNumbers;
+export default connect((state) => ({ count: state.count }))(SumNumbers);
